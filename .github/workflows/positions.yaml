@@ -1,0 +1,52 @@
+name: DEPLOY SUBGRAPH positions
+
+on:
+  push:
+    branches:
+      - dev
+      # - main
+    paths:
+      - "positions/**"
+
+env:
+  SUBGRAPH_FOLDER_NAME: positions
+  SUBGRAPH_ACCESS_TOKEN: ${{ secrets.SUBGRAPH_ACCESS_TOKEN }}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: DEV - Build and Deploy
+        if: ${{ github.ref == 'refs/heads/dev' }}
+        env:
+          NETWORK_NAMES: "fuji"
+        run: |
+          cd $SUBGRAPH_FOLDER_NAME
+          yarn
+          for network_name in $NETWORK_NAMES ; do 
+            yarn prepare:dev:${network_name}
+            graph codegen
+            graph build
+            graph auth --product hosted-service $SUBGRAPH_ACCESS_TOKEN
+            graph deploy --node https://api.thegraph.com/deploy/ infinix-finance/dev-${network_name}-${SUBGRAPH_FOLDER_NAME}
+          done
+
+      - name: PROD - Build and Deploy
+        if: ${{ github.ref == 'refs/heads/main' }}
+        env:
+          NETWORK_NAMES: "avalanche"
+        run: |
+          cd $SUBGRAPH_FOLDER_NAME
+          yarn
+          for network_name in $NETWORK_NAMES ; do 
+            yarn prepare:prod:${network_name}
+            graph codegen
+            graph build
+            graph auth --product hosted-service $SUBGRAPH_ACCESS_TOKEN
+            graph deploy --node https://api.thegraph.com/deploy/ infinix-finance/${network_name}-${SUBGRAPH_FOLDER_NAME}
+          done

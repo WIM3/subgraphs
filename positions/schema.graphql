@@ -1,0 +1,18 @@
+type PositionChange @entity {
+  # transaction hash
+  id: ID!
+  timestamp: Int!
+  trader: Bytes!
+  amm: Bytes!
+  margin: BigInt!
+  notional: BigInt!
+  exchangedSize: BigInt!
+  fee: BigInt!
+  sizeAfter: BigInt!
+  realizedPnl: BigInt!
+  unrealizedPnlAfter: BigInt!
+  badDebt: BigInt!
+  liquidationPenalty: BigInt!
+  spotPrice: BigInt!
+  fundingPayment: BigInt!
+}

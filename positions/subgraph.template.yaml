@@ -1,0 +1,26 @@
+specVersion: 0.0.4
+description: Warp V2 subgraph
+repository: https://github.com/infinix-finance/subgraphs/positions
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: ClearingHouse
+    network: {{network}}
+    source:
+      address: '{{clearingHouseAddress}}'
+      startBlock: {{clearingHouseStartBlock}}
+      abi: ClearingHouse
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - PositionChange
+      abis:
+        - name: ClearingHouse
+          file: ./abis/ClearingHouse.json
+      eventHandlers:
+        - event: PositionChanged(indexed address,indexed address,uint256,uint256,int256,uint256,int256,int256,int256,uint256,uint256,uint256,int256)
+          handler: handlePositionChanged
+      file: ./src/mappings/clearinghouse.ts
