@@ -5,8 +5,8 @@ on:
     branches:
       - dev
       # - main
-    paths:
-      - "positions/**"
+    # paths:
+    #   - "positions/**"
 
 env:
   SUBGRAPH_FOLDER_NAME: positions
