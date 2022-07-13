@@ -50,3 +50,5 @@ jobs:
             graph auth --product hosted-service $SUBGRAPH_ACCESS_TOKEN
             graph deploy --node https://api.thegraph.com/deploy/ infinix-finance/${network_name}-${SUBGRAPH_FOLDER_NAME}
           done
+
+
