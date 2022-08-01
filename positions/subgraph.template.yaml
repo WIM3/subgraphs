@@ -24,3 +24,27 @@ dataSources:
         - event: PositionChanged(indexed address,indexed address,uint256,uint256,int256,uint256,int256,int256,int256,uint256,uint256,uint256,int256)
           handler: handlePositionChanged
       file: ./src/mappings/clearinghouse.ts
+  - kind: ethereum/contract
+    name: InsuranceFund
+    network: {{network}}
+    source:
+      address: '{{insuranceFundAddress}}'
+      startBlock: {{insuranceFundStartBlock}}
+      abi: InsuranceFund
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Amm
+      abis:
+        - name: InsuranceFund
+          file: ./abis/InsuranceFund.json
+        - name: Amm
+          file: ./abis/Amm.json
+      eventHandlers:
+        - event: AmmAdded(address)
+          handler: handleAmmAdded
+        - event: AmmRemoved(address)
+          handler: handleAmmRemoved
+      file: ./src/mappings/insurancefund.ts

@@ -16,3 +16,8 @@ type PositionChange @entity {
   spotPrice: BigInt!
   fundingPayment: BigInt!
 }
+
+type Amm @entity {
+  id: ID!
+  fundingPeriod: BigInt!
+}

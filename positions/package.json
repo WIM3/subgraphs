@@ -7,7 +7,8 @@
     "prepare:prod:avalanche": "mustache config/avalanche.json subgraph.template.yaml > subgraph.yaml",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ infinix-finance/positions"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ infinix-finance/positions",
+    "deploy:test": "graph deploy --node https://api.thegraph.com/deploy/ hehe100596/general-subgraph-for-experimenting"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.32.0",
@@ -15,5 +16,3 @@
     "mustache": "^4.2.0"
   }
 }
-
-
