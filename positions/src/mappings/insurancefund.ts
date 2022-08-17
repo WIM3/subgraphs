@@ -8,7 +8,8 @@ export function handleAmmAdded(event: AmmAdded): void {
   let amm = new Amm(event.params.amm.toHex());
   let ammContract = AmmContract.bind(event.params.amm);
 
-  amm.fundingPeriod = ammContract.fundingPeriod();
+  amm.fundingPeriod = ammContract.fundingPeriod().toI32();
+  amm.priceFeedKey = ammContract.priceFeedKey().toString();
 
   amm.save();
 }

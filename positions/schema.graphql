@@ -19,5 +19,6 @@ type PositionChange @entity {
 
 type Amm @entity {
   id: ID!
-  fundingPeriod: BigInt!
+  priceFeedKey: String!
+  fundingPeriod: Int!
 }
