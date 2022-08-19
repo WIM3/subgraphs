@@ -6,7 +6,7 @@ type Position @entity {
   amm: Bytes!
   margin: BigInt!
   openNotional: BigInt!
-  positionSize: BigInt!
+  size: BigInt!
   tradingVolume: BigInt!
   leverage: BigInt!
   entryPrice: BigInt!
@@ -17,8 +17,8 @@ type Position @entity {
   liquidationPenalty: BigInt!
   fundingPayment: BigInt!
   totalPnlAmount: BigInt!
-  changes: [PositionChange!]! @derivedFrom(field: "position")
-  liquidations: [PositionLiquidation!]! @derivedFrom(field: "position")
+  positionChanges: [PositionChange!]! @derivedFrom(field: "position")
+  positionLiquidations: [PositionLiquidation!]! @derivedFrom(field: "position")
   marginChanges: [MarginChange!]! @derivedFrom(field: "position")
 }
 
