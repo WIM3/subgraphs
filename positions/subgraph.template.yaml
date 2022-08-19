@@ -16,13 +16,20 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
+        - Position
         - PositionChange
+        - PositionLiquidation
+        - MarginChange
       abis:
         - name: ClearingHouse
           file: ./abis/ClearingHouse.json
       eventHandlers:
         - event: PositionChanged(indexed address,indexed address,uint256,uint256,int256,uint256,int256,int256,int256,uint256,uint256,uint256,int256)
           handler: handlePositionChanged
+        - event: PositionLiquidated(indexed address,indexed address,uint256,uint256,uint256,address,uint256)
+          handler: handlePositionLiquidated
+        - event: MarginChanged(indexed address,indexed address,int256,int256)
+          handler: handleMarginChanged
       file: ./src/mappings/clearinghouse.ts
   - kind: ethereum/contract
     name: InsuranceFund

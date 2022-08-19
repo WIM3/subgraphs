@@ -1,9 +1,10 @@
 import { PositionChanged } from "../../generated/ClearingHouse/ClearingHouse";
 import { PositionChange } from "../../generated/schema";
 
-// TODO: most of these parameters might not be necessary, just for now
 export function handlePositionChanged(event: PositionChanged): void {
-  let position = new PositionChange(event.transaction.hash.toHex());
+  let position = new PositionChange(
+    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
+  );
 
   position.timestamp = event.block.timestamp.toI32();
   position.trader = event.params.trader;
