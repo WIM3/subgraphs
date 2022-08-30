@@ -1,0 +1,15 @@
+type PriceFeed @entity {
+  # trader - amm
+  id: ID!
+  timestamp: Int!
+  price: BigInt!
+  updates: [PriceUpdate!]! @derivedFrom(field: "priceFeed")
+}
+
+type PriceUpdate @entity {
+  # transaction hash - log index
+  id: ID!
+  priceFeed: PriceFeed!
+  timestamp: Int!
+  price: BigInt!
+}
