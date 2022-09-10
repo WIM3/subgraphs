@@ -1,5 +1,5 @@
 specVersion: 0.0.4
-description: Warp V2 subgraph
+description: Infinix position collector subgraph
 repository: https://github.com/infinix-finance/subgraphs/positions
 schema:
   file: ./schema.graphql
