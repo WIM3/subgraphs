@@ -70,6 +70,7 @@ type MarginChange @entity {
 type Amm @entity {
   # amm address
   id: ID!
+  quoteAsset: Bytes!
   priceFeedKey: String!
   fundingPeriod: Int!
 }
