@@ -9,6 +9,7 @@ import {
   PositionChange,
   PositionLiquidation,
   MarginChange,
+  Amm,
 } from "../../generated/schema";
 import { ZERO_BI, decimal } from "../utils/common";
 
@@ -65,6 +66,7 @@ export function handlePositionChanged(event: PositionChanged): void {
   let timestamp = event.block.timestamp.toI32();
   let position = getPosition(event.params.trader, event.params.amm);
   let change = new PositionChange(event.transaction.hash.toHex() + "-" + event.logIndex.toString());
+  let amm = Amm.load(event.params.amm.toHex());
 
   position.timestamp = timestamp;
   position.margin = event.params.margin;
@@ -105,6 +107,14 @@ export function handlePositionChanged(event: PositionChanged): void {
   change.liquidationPenalty = event.params.liquidationPenalty;
   change.spotPrice = event.params.spotPrice;
   change.fundingPayment = event.params.fundingPayment;
+
+  if (amm) {
+    amm.timestamp = timestamp;
+    amm.positionBalance = amm.positionBalance.plus(event.params.exchangedPositionSize);
+    amm.tradingVolume = amm.tradingVolume.plus(event.params.positionNotional);
+
+    amm.save();
+  }
 
   change.save();
   position.save();

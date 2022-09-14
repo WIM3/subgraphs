@@ -20,6 +20,7 @@ dataSources:
         - PositionChange
         - PositionLiquidation
         - MarginChange
+        - Amm
       abis:
         - name: ClearingHouse
           file: ./abis/ClearingHouse.json
@@ -55,3 +56,24 @@ dataSources:
         - event: AmmRemoved(address)
           handler: handleAmmRemoved
       file: ./src/mappings/insurancefund.ts
+templates:
+  - kind: ethereum/contract
+    name: Amm
+    network: {{network}}
+    source:
+      abi: Amm
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Amm
+      abis:
+        - name: Amm
+          file: ./abis/Amm.json
+      eventHandlers:
+        - event: FundingRateUpdated(int256,uint256)
+          handler: handleFundingRateUpdated
+        - event: ReserveSnapshotted(uint256,uint256,uint256)
+          handler: handleReserveSnapshotted
+      file: ./src/mappings/amm.ts
