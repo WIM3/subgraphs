@@ -9,11 +9,14 @@ import { ZERO_BI } from "../utils/common";
 export function handleAmmAdded(event: AmmAdded): void {
   let amm = new Amm(event.params.amm.toHex());
   let ammContract = AmmContract.bind(event.params.amm);
+  let timestamp = event.block.timestamp.toI32();
 
-  amm.timestamp = event.block.timestamp.toI32();
+  amm.timestamp = timestamp;
   amm.quoteAsset = ammContract.quoteAsset();
   amm.priceFeedKey = ammContract.priceFeedKey().toString();
   amm.fundingPeriod = ammContract.fundingPeriod().toI32();
+  amm.fundingBufferPeriod = ammContract.fundingBufferPeriod().toI32();
+  amm.lastFunding = timestamp;
   amm.fundingRate = ammContract.fundingRate();
   amm.tradeLimitRatio = ammContract.tradeLimitRatio();
   amm.positionBalance = ZERO_BI;

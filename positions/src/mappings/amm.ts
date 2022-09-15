@@ -3,9 +3,11 @@ import { Amm } from "../../generated/schema";
 
 export function handleFundingRateUpdated(event: FundingRateUpdated): void {
   let amm = Amm.load(event.address.toHex());
+  let timestamp = event.block.timestamp.toI32();
 
   if (amm) {
-    amm.timestamp = event.block.timestamp.toI32();
+    amm.timestamp = timestamp;
+    amm.lastFunding = timestamp;
     amm.fundingRate = event.params.rate;
     amm.underlyingPrice = event.params.underlyingPrice;
 

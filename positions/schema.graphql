@@ -74,6 +74,8 @@ type Amm @entity {
   quoteAsset: Bytes!
   priceFeedKey: String!
   fundingPeriod: Int!
+  fundingBufferPeriod: Int!
+  lastFunding: Int!
   fundingRate: BigInt!
   tradeLimitRatio: BigInt!
   positionBalance: BigInt!
