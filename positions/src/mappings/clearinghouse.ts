@@ -108,6 +108,7 @@ export function handlePositionChanged(event: PositionChanged): void {
   change.liquidationPenalty = event.params.liquidationPenalty;
   change.spotPrice = event.params.spotPrice;
   change.fundingPayment = event.params.fundingPayment;
+  change.leverage = position.leverage;
   change.entryPrice = position.entryPrice;
   change.underlyingPrice = ZERO_BI;
 
@@ -163,6 +164,7 @@ export function handleMarginChanged(event: MarginChanged): void {
   marginChange.amm = event.params.amm;
   marginChange.amount = event.params.amount;
   marginChange.fundingPayment = event.params.fundingPayment;
+  marginChange.leverage = position.leverage;
   marginChange.entryPrice = position.entryPrice;
   marginChange.underlyingPrice = ZERO_BI;
 

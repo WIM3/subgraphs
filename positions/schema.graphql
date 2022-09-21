@@ -41,6 +41,7 @@ type PositionChange @entity {
   liquidationPenalty: BigInt!
   spotPrice: BigInt!
   fundingPayment: BigInt!
+  leverage: BigInt!
   entryPrice: BigInt!
   underlyingPrice: BigInt!
 }
@@ -68,6 +69,7 @@ type MarginChange @entity {
   amm: Bytes!
   amount: BigInt!
   fundingPayment: BigInt!
+  leverage: BigInt!
   entryPrice: BigInt!
   underlyingPrice: BigInt!
 }
