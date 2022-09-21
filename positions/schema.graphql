@@ -10,6 +10,7 @@ type Position @entity {
   tradingVolume: BigInt!
   leverage: BigInt!
   entryPrice: BigInt!
+  underlyingPrice: BigInt!
   fee: BigInt!
   realizedPnl: BigInt!
   unrealizedPnl: BigInt!
@@ -40,6 +41,8 @@ type PositionChange @entity {
   liquidationPenalty: BigInt!
   spotPrice: BigInt!
   fundingPayment: BigInt!
+  entryPrice: BigInt!
+  underlyingPrice: BigInt!
 }
 
 type PositionLiquidation @entity {
@@ -65,6 +68,8 @@ type MarginChange @entity {
   amm: Bytes!
   amount: BigInt!
   fundingPayment: BigInt!
+  entryPrice: BigInt!
+  underlyingPrice: BigInt!
 }
 
 type Amm @entity {

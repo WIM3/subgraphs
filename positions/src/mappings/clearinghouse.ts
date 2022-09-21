@@ -48,6 +48,7 @@ function getPosition(trader: Address, amm: Address): Position {
     position.tradingVolume = ZERO_BI;
     position.leverage = ZERO_BI;
     position.entryPrice = ZERO_BI;
+    position.underlyingPrice = ZERO_BI;
     position.fee = ZERO_BI;
     position.realizedPnl = ZERO_BI;
     position.unrealizedPnl = ZERO_BI;
@@ -107,8 +108,13 @@ export function handlePositionChanged(event: PositionChanged): void {
   change.liquidationPenalty = event.params.liquidationPenalty;
   change.spotPrice = event.params.spotPrice;
   change.fundingPayment = event.params.fundingPayment;
+  change.entryPrice = position.entryPrice;
+  change.underlyingPrice = ZERO_BI;
 
   if (amm) {
+    position.underlyingPrice = amm.underlyingPrice;
+    change.underlyingPrice = amm.underlyingPrice;
+
     amm.timestamp = timestamp;
     amm.positionBalance = amm.positionBalance.plus(event.params.exchangedPositionSize);
     amm.tradingVolume = amm.tradingVolume.plus(event.params.positionNotional);
@@ -144,6 +150,7 @@ export function handleMarginChanged(event: MarginChanged): void {
   let marginChange = new MarginChange(
     event.transaction.hash.toHex() + "-" + event.logIndex.toString()
   );
+  let amm = Amm.load(event.params.amm.toHex());
 
   position.timestamp = timestamp;
   position.margin = position.margin.plus(event.params.amount);
@@ -156,6 +163,13 @@ export function handleMarginChanged(event: MarginChanged): void {
   marginChange.amm = event.params.amm;
   marginChange.amount = event.params.amount;
   marginChange.fundingPayment = event.params.fundingPayment;
+  marginChange.entryPrice = position.entryPrice;
+  marginChange.underlyingPrice = ZERO_BI;
+
+  if (amm) {
+    position.underlyingPrice = amm.underlyingPrice;
+    marginChange.underlyingPrice = amm.underlyingPrice;
+  }
 
   marginChange.save();
   position.save();
