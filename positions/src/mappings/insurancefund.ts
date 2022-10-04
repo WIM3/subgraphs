@@ -10,6 +10,7 @@ export function handleAmmAdded(event: AmmAdded): void {
   let amm = new Amm(event.params.amm.toHex());
   let ammContract = AmmContract.bind(event.params.amm);
   let timestamp = event.block.timestamp.toI32();
+  let underlyingPriceCall = ammContract.try_getUnderlyingPrice();
 
   amm.timestamp = timestamp;
   amm.quoteAsset = ammContract.quoteAsset();
@@ -23,7 +24,7 @@ export function handleAmmAdded(event: AmmAdded): void {
   amm.tradingVolume = ZERO_BI;
   amm.quoteAssetReserve = ZERO_BI;
   amm.baseAssetReserve = ZERO_BI;
-  amm.underlyingPrice = ammContract.getUnderlyingPrice()[0].toBigInt();
+  if (!underlyingPriceCall.reverted) amm.underlyingPrice = underlyingPriceCall.value[0].toBigInt();
 
   AmmTemplate.create(event.params.amm);
   amm.save();
