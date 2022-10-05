@@ -24,9 +24,11 @@ export function handleAmmAdded(event: AmmAdded): void {
   amm.tradingVolume = ZERO_BI;
   amm.quoteAssetReserve = ZERO_BI;
   amm.baseAssetReserve = ZERO_BI;
-  amm.underlyingPrice = underlyingPriceCall.reverted
-    ? ZERO_BI
-    : underlyingPriceCall.value[0].toBigInt();
+  amm.underlyingPrice = ZERO_BI;
+
+  if (!underlyingPriceCall.reverted) {
+    amm.underlyingPrice = underlyingPriceCall.value[0].toBigInt();
+  }
 
   AmmTemplate.create(event.params.amm);
   amm.save();
