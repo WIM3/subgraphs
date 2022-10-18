@@ -22,8 +22,8 @@ export function handleAmmAdded(event: AmmAdded): void {
   amm.tradeLimitRatio = ammContract.tradeLimitRatio();
   amm.positionBalance = ZERO_BI;
   amm.tradingVolume = ZERO_BI;
-  amm.quoteAssetReserve = ZERO_BI;
-  amm.baseAssetReserve = ZERO_BI;
+  amm.quoteAssetReserve = ammContract.quoteAssetReserve();
+  amm.baseAssetReserve = ammContract.baseAssetReserve();
   amm.underlyingPrice = ZERO_BI;
 
   if (!underlyingPriceCall.reverted) {
