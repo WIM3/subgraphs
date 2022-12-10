@@ -1,5 +1,7 @@
 {
   "network": "fuji",
-  "clearingHouseAddress": "0x115eB30d254161Fc7C16a2E20c1c34aCbA56cCD1",
-  "clearingHouseStartBlock": 10579851
+  "clearingHouseAddress": "0xaFBCFf94cD9cA695b4d97ebAC9095303cC38703A",
+  "clearingHouseStartBlock": 14107723,
+  "insuranceFundAddress": "0xBAA1734Fd6A5f324da97FfB74ca2616CdfF2f77d",
+  "insuranceFundStartBlock": 14107598
 }

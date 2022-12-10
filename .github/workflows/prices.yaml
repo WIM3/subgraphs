@@ -1,4 +1,4 @@
-name: DEPLOY SUBGRAPH positions
+name: DEPLOY SUBGRAPH prices
 
 on:
   push:
@@ -6,10 +6,10 @@ on:
       - dev
       # - main
     paths:
-      - "positions/**"
+      - "prices/**"
 
 env:
-  SUBGRAPH_FOLDER_NAME: positions
+  SUBGRAPH_FOLDER_NAME: prices
   SUBGRAPH_ACCESS_TOKEN: ${{ secrets.SUBGRAPH_ACCESS_TOKEN }}
 
 jobs:

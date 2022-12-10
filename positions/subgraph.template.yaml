@@ -1,5 +1,5 @@
 specVersion: 0.0.4
-description: Warp V2 subgraph
+description: Infinix position collector subgraph
 repository: https://github.com/infinix-finance/subgraphs/positions
 schema:
   file: ./schema.graphql
@@ -16,11 +16,64 @@ dataSources:
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
+        - Position
         - PositionChange
+        - PositionLiquidation
+        - MarginChange
+        - Amm
       abis:
         - name: ClearingHouse
           file: ./abis/ClearingHouse.json
       eventHandlers:
         - event: PositionChanged(indexed address,indexed address,uint256,uint256,int256,uint256,int256,int256,int256,uint256,uint256,uint256,int256)
           handler: handlePositionChanged
+        - event: PositionLiquidated(indexed address,indexed address,uint256,uint256,uint256,address,uint256)
+          handler: handlePositionLiquidated
+        - event: MarginChanged(indexed address,indexed address,int256,int256)
+          handler: handleMarginChanged
       file: ./src/mappings/clearinghouse.ts
+  - kind: ethereum/contract
+    name: InsuranceFund
+    network: {{network}}
+    source:
+      address: '{{insuranceFundAddress}}'
+      startBlock: {{insuranceFundStartBlock}}
+      abi: InsuranceFund
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Amm
+      abis:
+        - name: InsuranceFund
+          file: ./abis/InsuranceFund.json
+        - name: Amm
+          file: ./abis/Amm.json
+      eventHandlers:
+        - event: AmmAdded(address)
+          handler: handleAmmAdded
+        - event: AmmRemoved(address)
+          handler: handleAmmRemoved
+      file: ./src/mappings/insurancefund.ts
+templates:
+  - kind: ethereum/contract
+    name: Amm
+    network: {{network}}
+    source:
+      abi: Amm
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Amm
+      abis:
+        - name: Amm
+          file: ./abis/Amm.json
+      eventHandlers:
+        - event: FundingRateUpdated(int256,uint256)
+          handler: handleFundingRateUpdated
+        - event: ReserveSnapshotted(uint256,uint256,uint256)
+          handler: handleReserveSnapshotted
+      file: ./src/mappings/amm.ts

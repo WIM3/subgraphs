@@ -1,0 +1,29 @@
+specVersion: 0.0.4
+description: Infinix price feed handler subgraph
+repository: https://github.com/infinix-finance/subgraphs/prices
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: DapiServer
+    network: {{network}}
+    source:
+      address: '{{address}}'
+      startBlock: {{startBlock}}
+      abi: DapiServer
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - PriceFeed
+        - PriceUpdate
+      abis:
+        - name: DapiServer
+          file: ./abis/DapiServer.json
+      eventHandlers:
+        - event: UpdatedBeaconWithSignedData(indexed bytes32,int256,uint256)
+          handler: handleUpdatedBeaconWithSignedData
+        - event: UpdatedBeaconWithPsp(indexed bytes32,bytes32,int224,uint32)
+          handler: handleUpdatedBeaconWithPsp
+      file: ./src/mappings/dapiserver.ts
