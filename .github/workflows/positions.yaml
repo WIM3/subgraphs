@@ -44,7 +44,7 @@ jobs:
             graph codegen
             graph build
             graph auth --product hosted-service $SUBGRAPH_ACCESS_TOKEN
-            graph deploy --node https://api.thegraph.com/deploy/ hehe100596/dev-${network_name}-pos
+            graph deploy --node https://api.thegraph.com/deploy/ hehe100596/dev-${network_name}-traders-island-pos
           done
 
       - name: PROD - Build and Deploy
