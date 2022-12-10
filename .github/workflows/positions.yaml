@@ -15,7 +15,7 @@ env:
 jobs:
   deploy:
     name: Deploy
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -44,7 +44,7 @@ jobs:
             graph codegen
             graph build
             graph auth --product hosted-service $SUBGRAPH_ACCESS_TOKEN
-            graph deploy --node https://api.thegraph.com/deploy/ traders-island/dev-${network_name}-${SUBGRAPH_FOLDER_NAME}
+            graph deploy --node https://api.thegraph.com/deploy/ hehe100596/dev-${network_name}-pos
           done
 
       - name: PROD - Build and Deploy
