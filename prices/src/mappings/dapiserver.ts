@@ -1,6 +1,6 @@
 import {
-  UpdatedBeaconWithSignedData,
   UpdatedBeaconWithPsp,
+  UpdatedBeaconWithSignedData,
 } from "../../generated/DapiServer/DapiServer";
 import { PriceFeed, PriceUpdate } from "../../generated/schema";
 import { ZERO_BI } from "../utils/common";
